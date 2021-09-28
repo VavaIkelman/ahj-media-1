@@ -2,13 +2,14 @@
 export default class Geo {
   constructor(callback) {
     this.callback = callback;
+
     this.checkValidity = this.checkValidity.bind(this);
   }
 
   geo() {
     this.promiseThroughAPI().then((coords) => {
       this.callback(coords);
-    }).cath(() => {
+    }).catch(() => {
       this.askCoords();
     });
   }
@@ -18,8 +19,7 @@ export default class Geo {
       return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition((position) => {
           resolve({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-        },
-        (error) => {
+        }, (error) => {
           reject(error);
         });
       });
